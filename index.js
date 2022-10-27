@@ -1,11 +1,6 @@
-var gameOn = true;
-var waitTime = 1000
-mapping = {
-  0: 'green',
-  1: 'red',
-  2: 'blue',
-  3: 'yellow'
-}
+
+mapping = ['green','red','blue','yellow']
+
 var level = 0
 var gamePattern = []
 var userClickedPattern = []
@@ -19,9 +14,7 @@ $('body').keydown(function() {
   } else {}
 })
 
-
-
-
+// Randomly select the next color
 function nextSequence() {
   $('h1').text('Level ' + String(level))
   var num = Math.floor(Math.random() * 4)
@@ -30,9 +23,7 @@ function nextSequence() {
   activateButton(randomChosenColour)
   userClickedPattern = []
   level++
-
 }
-
 
 // highlight chosen button
 function activateButton(randomChosenColour) {
@@ -42,15 +33,16 @@ function activateButton(randomChosenColour) {
   aud.play()
 }
 
-// wClick event
+// Click event
 $('.btn').click(function() {
+  // React to the button push
   var userClickedButton = $(this).attr('id');
   userClickedPattern.push(userClickedButton)
   var aud = new Audio('sounds/' + userClickedButton + '.mp3')
   aud.play()
   buttonVisual(userClickedButton)
 
-
+  // See if the correct box was clicked on
   var match = checkAnswer(gamePattern, userClickedPattern)
 
   // wrong button
@@ -74,9 +66,6 @@ $('.btn').click(function() {
   }
 })
 
-
-
-
 function checkAnswer(gamePattern, userClickedPattern) {
   for (var i = 0; i < userClickedPattern.length; i++) {
     if (gamePattern[i] !== userClickedPattern[i]) return false
@@ -84,16 +73,8 @@ function checkAnswer(gamePattern, userClickedPattern) {
   return true
 }
 
-
-
-
-
-
-
 function buttonVisual(userClickedButton) {
-
   $("." + userClickedButton).addClass('pressed')
-
   setTimeout
     (function() {
       $("." + userClickedButton).removeClass('pressed')
